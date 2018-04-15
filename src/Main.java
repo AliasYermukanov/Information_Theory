@@ -1,14 +1,76 @@
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class Main {
     static ArrayList<Letters> arrayList1 = new ArrayList<>();
     static File file = new File("file.txt");
+    static File filetodecode = new File("dictionary.txt");
+    static ArrayList<Decode> list= new ArrayList<>();
 
     public static void main(String[] args)throws IOException {
         part1();
         part2(arrayList1);
-        System.out.printf(arrayList1.toString());
+        part3();
+    }
+
+    private static void part3() {
+        Scanner sc = null;
+
+        ArrayList<String> all= new ArrayList();
+        try {
+            sc = new Scanner(filetodecode);
+            while (sc.hasNextLine()){
+                all.add(sc.nextLine());
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        int n=0;
+        for(String a: all){
+
+            list.add(new Decode(a.substring(0,1),a.substring(2,a.length())));
+        }
+        //System.out.println(list.toString());
+        decode();
+    }
+
+    private static void decode() {
+        Path path = Paths.get("encoded.txt");
+        Charset charset = StandardCharsets.UTF_8;
+
+        String content;
+        String result = "";
+        try {
+
+            content = new String(Files.readAllBytes(path), charset);
+            String c = "";
+            for(int i = 0 ; i < content.length() ; i++){
+                c += content.charAt(i);
+
+                for (Decode s : list) {
+                    if(s.getCode().compareTo(c) == 0){
+                        String v = s.getLetter();
+                        if(v.compareTo("\\n") == 0)
+                            v = "\n";
+
+                        result += v;
+                        c = "";
+                    }
+                }
+
+            }
+
+
+            Files.write(Paths.get("decodedText.txt"), result.getBytes(charset));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     private static void part2(ArrayList<Letters> arrayList1) throws IOException {
@@ -75,7 +137,7 @@ public class Main {
                 min = dif;
                 index = i;
             }
-            //System.out.println("\t"+i +") " +sumA + " " + sumB + " dif = "+dif);
+
         }
         for(int i = a ; i < index; i++){
             arrayList1.get(i).addBit(0);
@@ -95,8 +157,8 @@ public class Main {
         ArrayList arrayList = new ArrayList();
         char[] array;
         String all="";
-        while(sc.hasNext()){
-            all += sc.next();
+        while(sc.hasNextLine()){
+            all += sc.nextLine();
         }
         array=all.toCharArray();
 
