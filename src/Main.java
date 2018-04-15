@@ -14,6 +14,18 @@ public class Main {
     private static void part2(ArrayList<Letters> arrayList1) throws IOException {
         code(0,arrayList1.size());
         encodefile();
+        makeDictionary();
+    }
+
+    private static void makeDictionary() throws IOException {
+        FileWriter fw = new FileWriter("dictionary.txt");
+        BufferedWriter out = new BufferedWriter(fw);
+        String all="";
+        for (Letters l:arrayList1) {
+            all += l.getLetter()+"-"+l.getCode()+"\n";
+        }
+        out.write(all);
+        out.close();
     }
 
     private static void encodefile() throws IOException {
