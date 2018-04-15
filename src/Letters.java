@@ -1,13 +1,26 @@
-public class Letters {
-    char letter;
-    int number;
-    double probabilty;
+import java.util.Collections;
+import java.util.Comparator;
 
-    public Letters(char letter, int number, double probabilty) {
+public class Letters implements Comparable<Letters>{
+    private char letter;
+    private Integer number;
+    private Double probabilty;
+    private String code;
+
+    public Letters(char letter, Integer number, Double probabilty, String code) {
         this.letter = letter;
         this.number = number;
         this.probabilty = probabilty;
+        this.code = code;
     }
+
+    public Letters(char letter) {
+        this.letter = letter;
+        this.number = 0;
+    }
+
+
+
 
     public char getLetter() {
         return letter;
@@ -17,20 +30,28 @@ public class Letters {
         this.letter = letter;
     }
 
-    public int getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
-    public double getProbabilty() {
+    public Double getProbabilty() {
         return probabilty;
     }
 
-    public void setProbabilty(double probabilty) {
+    public void setProbabilty(Double probabilty) {
         this.probabilty = probabilty;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Override
@@ -42,4 +63,9 @@ public class Letters {
                 "}";
     }
 
+    @Override
+    public int compareTo(Letters other) {
+        return other.getProbabilty().compareTo(this.getProbabilty());
+    }
 }
+
