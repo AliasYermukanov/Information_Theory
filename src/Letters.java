@@ -17,6 +17,8 @@ public class Letters implements Comparable<Letters>{
     public Letters(char letter) {
         this.letter = letter;
         this.number = 0;
+        this.probabilty = 0.0;
+        this.code = "";
     }
 
 
@@ -60,12 +62,17 @@ public class Letters implements Comparable<Letters>{
                 "letter=" + letter +
                 ", number=" + number +
                 ", probabilty=" + probabilty +
-                "}";
+                ", code='" + code + '\'' +
+                '}';
     }
 
     @Override
     public int compareTo(Letters other) {
         return other.getProbabilty().compareTo(this.getProbabilty());
+    }
+
+    public void addBit(int bit){
+        this.code += ""+ bit;
     }
 }
 
